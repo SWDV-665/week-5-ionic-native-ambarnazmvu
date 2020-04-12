@@ -6,8 +6,6 @@ import { GroceriesServiceProvider } from '../../providers/groceries-service/groc
 import { InputDialogServiceProvider } from '../../providers/input-dialog-service/input-dialog-service';
 
 
-
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -16,14 +14,12 @@ export class HomePage {
 
   title = "Grocery";
 
-  
-
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController, public dataServices: GroceriesServiceProvider, public inputDialogService: InputDialogServiceProvider) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController, public dataService: GroceriesServiceProvider, public inputDialogService: InputDialogServiceProvider) {
 
   }
 
   loadItems() {
-    return this.dataServices.getItems();
+    return this.dataService.getItems();
   }
 
   removeItem(item, index) {
@@ -33,8 +29,8 @@ export class HomePage {
       duration: 3000
     });
     toast.present();
-    this.dataServices.removeItem(index);
-    
+
+    this.dataService.removeItem(index);  
   }
 
   editItem(item, index) {
@@ -44,13 +40,14 @@ export class HomePage {
       duration: 3000
     });
     toast.present();
-    this.inputDialogService.showEditItemPrompt(item, index);
-  }
+    this.inputDialogService.showPrompt(item, index);
+  }  
 
   addItem() {
     console.log("Adding Item");
-    this.inputDialogService.showAddItemPrompt();
+    this.inputDialogService.showPrompt();
   }
 
-  
+
+
 }

@@ -14,19 +14,21 @@ export class GroceriesServiceProvider {
   constructor() {
     console.log('Hello GroceriesServiceProvider Provider');
   }
-  getItems(){
+
+  getItems() {
     return this.items;
   }
 
   removeItem(index) {
     this.items.splice(index, 1);
   }
-  additem(item) {
+
+  addItem(item) {
     this.items.push(item);
   }
+
   editItem(item, index) {
     this.items[index] = item;
   }
-  
 
 }

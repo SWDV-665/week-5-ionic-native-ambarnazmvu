@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { GroceriesServiceProvider } from '../../providers/groceries-service/groceries-service';
 import { AlertController } from 'ionic-angular';
-
+import { GroceriesServiceProvider } from '../../providers/groceries-service/groceries-service';
 
 /*
   Generated class for the InputDialogServiceProvider provider.
@@ -12,55 +11,25 @@ import { AlertController } from 'ionic-angular';
 @Injectable()
 export class InputDialogServiceProvider {
 
-  constructor(public alertCtrl: AlertController,public dataServices: GroceriesServiceProvider) {
+  constructor(public alertCtrl: AlertController, public dataService: GroceriesServiceProvider) {
     console.log('Hello InputDialogServiceProvider Provider');
   }
-  showAddItemPrompt() {
+
+
+  showPrompt(item?, index?) {
     const prompt = this.alertCtrl.create({
-      title: 'Add Item',
-      message: "Please enter item...",
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Name'
-        },
-        {
-          name: 'quantity',
-          placeholder: 'Quantity'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Save',
-          handler: item => {
-            console.log('Saved clicked', item);
-            this.dataServices.additem(item);
-          }
-        }
-      ]
-    });
-    prompt.present();
-  }
-  showEditItemPrompt(item, index) {
-    const prompt = this.alertCtrl.create({
-      title: 'Edit Item',
-      message: "Please edit item...",
+      title: item ? 'Edit Item' : 'Add Item',
+      message: item ? "Please edit item..." : "Please enter item...",
       inputs: [
         {
           name: 'name',
           placeholder: 'Name',
-          value: item.name
+          value: item ? item.name : null
         },
         {
           name: 'quantity',
           placeholder: 'Quantity',
-          value: item.quantity
+          value: item ? item.quantity : null
         },
       ],
       buttons: [
@@ -74,8 +43,13 @@ export class InputDialogServiceProvider {
           text: 'Save',
           handler: item => {
             console.log('Saved clicked', item);
-            this.dataServices.editItem(item, index);
-            
+            if (index !== undefined) {
+              this.dataService.editItem(item, index);
+            }
+            else {
+              this.dataService.addItem(item);
+            }
+
           }
         }
       ]
